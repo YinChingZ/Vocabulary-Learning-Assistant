@@ -1,0 +1,145 @@
+/* Custom animations */
+
+/* 卡片翻转动画 */
+@keyframes flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(180deg);
+  }
+}
+
+.flip-card {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.flip-card-inner {
+  transition: transform 0.4s ease-in-out;
+  transform-style: preserve-3d;
+}
+
+.flip-card-front,
+.flip-card-back {
+  backface-visibility: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+/* 淡入动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* 滑动进入动画 */
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-in-up {
+  animation: slideInUp 0.3s ease-out forwards;
+}
+
+/* 内容淡入淡出动画 */
+@keyframes contentFade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.content-fade {
+  animation: contentFade 0.3s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+/* 正确答案动画 */
+@keyframes correctAnswer {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.correct-answer {
+  animation: correctAnswer 0.8s ease-out;
+}
+
+/* 错误答案动画 */
+@keyframes wrongAnswer {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-5px);
+  }
+  40%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+.wrong-answer {
+  animation: wrongAnswer 0.5s ease-in-out;
+}
+
+/* 按钮缩放动画 */
+@keyframes buttonScale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.button-scale {
+  animation: buttonScale 0.2s ease-in-out;
+}
+
+/* 卡片进入动画 */
+@keyframes cardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-enter {
+  animation: cardEnter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}

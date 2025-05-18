@@ -1,0 +1,75 @@
+/* filepath: d:\Projects\satwordlist\vocabulary-app\src\styles\tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 基础样式覆盖 */
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: 0.5px;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-medium leading-relaxed;
+  }
+  
+  h1 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  h2 {
+    @apply text-xl md:text-2xl;
+  }
+  
+  h3 {
+    @apply text-lg md:text-xl;
+  }
+}
+
+/* 自定义组件类 */
+@layer components {
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 transition-all duration-200;
+  }
+  
+  .card:hover {
+    @apply shadow-md;
+  }
+  
+  .card-highlight {
+    @apply border-l-4 border-blue-500;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-500 hover:bg-blue-600 text-white focus:ring-blue-500 hover:shadow-md;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-500 hover:bg-gray-600 text-white focus:ring-gray-500 hover:shadow-md;
+  }
+  
+  .form-input {
+    @apply border border-gray-300 dark:border-gray-600 rounded-md focus:border-blue-500 dark:focus:border-blue-400 focus:ring focus:ring-blue-200 dark:focus:ring-blue-900 transition-colors duration-150;
+  }
+}
+
+/* 工具类 */
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-700;
+  }
+  
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
