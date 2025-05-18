@@ -116,7 +116,7 @@
    * `<button>` 列表，两项随机位置
 3. **拖拽（Drag & Drop）**
 
-   * 使用 `react-beautiful-dnd` 实现词语卡拖至目标定义区
+   * 使用 `@hello-pangea/dnd` 实现词语卡拖至目标定义区
 
 ### 即时反馈
 
