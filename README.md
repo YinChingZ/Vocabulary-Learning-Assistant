@@ -1,6 +1,4 @@
-YinChingZ: 描述以下这个项目，信息要足够用于创建Github仓库
-
-Workspace: 正在收集工作区信息# 词汇学习助手 (Vocabulary Learning Assistant)
+# 词汇学习助手 (Vocabulary Learning Assistant)
 
 一个现代化、交互性强的词汇学习应用，帮助用户高效记忆和掌握单词。采用间隔重复算法优化学习效果，提供多种学习模式和直观的进度追踪。
 
