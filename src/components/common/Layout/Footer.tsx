@@ -52,7 +52,7 @@ const Footer: React.FC<FooterProps> = ({
               <div className="w-full md:w-auto mt-4 md:mt-0 md:ml-6">
                 <div className="flex justify-center md:justify-end space-x-4">
                   <a
-                    href="#"
+                    href="https://github.com/YinChingZ/Vocabulary-Learning-Assistant"
                     className="text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
                     aria-label="GitHub"
                   >
@@ -61,7 +61,7 @@ const Footer: React.FC<FooterProps> = ({
                     </svg>
                   </a>
                   <a
-                    href="#"
+                    href="https://www.bilibili.com/video/BV1uT4y1P7CX"
                     className="text-gray-400 hover:text-blue-500 dark:hover:text-blue-400"
                     aria-label="Twitter"
                   >
