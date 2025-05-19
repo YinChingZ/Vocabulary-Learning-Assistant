@@ -39,7 +39,8 @@ const Header: React.FC<HeaderProps> = ({
     { path: '/import', label: '导入词汇' },
     { path: '/flashcard', label: '闪卡学习' },
     { path: '/quiz', label: '词汇测验' },
-    { path: '/summary', label: '学习总结' }
+    { path: '/summary', label: '学习总结' },
+    { path: '/settings', label: '设置' }
   ];
 
   return (

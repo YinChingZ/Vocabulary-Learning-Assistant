@@ -14,7 +14,7 @@ import Spinner from '../components/common/Spinner';
 // 导入上下文、hook和工具
 import VocabularyContext from '../context/VocabularyContext';
 import ProgressContext from '../context/ProgressContext';
-import SettingsContext from '../context/SettingsContext';
+import SettingsContext, { useSettings } from '../context/SettingsContext';
 import { generateQuiz } from '../utils/quizAlgorithm';
 import { ROUTES } from '../constants/routes';
 import { QUIZ_SETTINGS } from '../constants/quiz-settings';
@@ -42,7 +42,7 @@ const QuizPage: React.FC = () => {
   // 上下文
   const { vocabulary } = useContext(VocabularyContext);
   const { progress, setProgress } = useContext(ProgressContext);
-  const { settings } = useContext(SettingsContext);
+  const { settings } = useSettings();
   const navigate = useNavigate();
 
   // 初始化测验
@@ -50,12 +50,20 @@ const QuizPage: React.FC = () => {
     // 只在首次初始化或重新加载测验时执行
     if (!isLoading) return;
     if (vocabulary && vocabulary.length > 0) {
-      // 根据生成的问题数组设置测验类型序列，保持顺序一致
-      const generatedQuestions = generateQuiz(vocabulary);
-      const questionsToUse = generatedQuestions.slice(
-        0,
-        Math.min(QUIZ_SETTINGS.QUESTION_COUNT, generatedQuestions.length)
+      // 使用用户设置的题目数量和题型分布生成测验题目
+      const typeDist = settings.quizTypeDistribution;
+      const distribution = {
+        'type-in': typeDist.typeIn / 100,
+        'choice': typeDist.choice / 100,
+        'drag-drop': typeDist.dragDrop / 100
+      };
+      const generatedQuestions = generateQuiz(
+        vocabulary,
+        {},
+        settings.quizCount,
+        distribution
       );
+      const questionsToUse = generatedQuestions;
       const types = questionsToUse.map(q => q.type as QuizType);
       setQuizTypes(types);
 
@@ -66,7 +74,7 @@ const QuizPage: React.FC = () => {
       // 如果没有词汇数据，重定向到导入页面
       navigate(ROUTES.IMPORT);
     }
-  }, [isLoading, vocabulary, navigate]);
+  }, [isLoading, vocabulary, navigate, settings.quizCount, settings.quizTypeDistribution]);
 
   // 当前问题
   const currentQuestion = questions[currentQuestionIndex];

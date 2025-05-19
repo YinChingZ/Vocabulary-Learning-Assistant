@@ -7,6 +7,7 @@ import FlashcardPage from '../pages/FlashcardPage';
 import QuizPage from '../pages/QuizPage';
 import SummaryPage from '../pages/SummaryPage';
 import NotFoundPage from '../pages/NotFoundPage';
+import SettingsPage from '../pages/SettingsPage';
 
 // 导入上下文和常量
 import { VocabularyContext } from '../context/VocabularyContext';
@@ -62,6 +63,9 @@ const AppRoutes: React.FC = () => {
       } />
       
       <Route path={ROUTES.SUMMARY} element={<SummaryPage />} />
+      
+      {/* 设置页面 */}
+      <Route path="/settings" element={<SettingsPage />} />
       
       {/* 404 页面 */}
       <Route path="*" element={<NotFoundPage />} />

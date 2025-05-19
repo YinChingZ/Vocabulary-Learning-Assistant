@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useEffect, ReactNode, useContext } from 'react';
 import { STORAGE_KEYS } from '../constants/storage-keys';
 
 // 定义设置类型
@@ -171,6 +171,15 @@ export const SettingsProvider: React.FC<SettingsProviderProps> = ({
       {children}
     </SettingsContext.Provider>
   );
+};
+
+// Custom hook to use settings context
+export const useSettings = (): SettingsContextType => {
+  const context = useContext(SettingsContext);
+  if (!context) {
+    throw new Error('useSettings must be used within a SettingsProvider');
+  }
+  return context;
 };
 
 export default SettingsContext;
