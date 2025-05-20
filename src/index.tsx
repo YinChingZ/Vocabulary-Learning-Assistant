@@ -5,6 +5,7 @@ import './styles/animations.css';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
+import { ThemeProvider } from './context/ThemeContext';
 import reportWebVitals from './reportWebVitals';
 
 /**
@@ -55,7 +56,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </Router>
   </React.StrictMode>
 );

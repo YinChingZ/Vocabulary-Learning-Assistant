@@ -61,7 +61,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     if (mediaQuery.addEventListener) {
       mediaQuery.addEventListener('change', handleChange);
     } else {
-      // 旧版浏览器兼容
       mediaQuery.addListener(handleChange);
     }
     
@@ -73,7 +72,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
         mediaQuery.removeListener(handleChange);
       }
     };
-  }, [theme]);
+  }, []);
   
   // 当主题变化时应用主题样式
   useEffect(() => {
@@ -93,8 +92,12 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   
   // 将主题应用到文档
   const applyThemeToDocument = (theme: 'light' | 'dark') => {
-    document.documentElement.classList.remove('light-theme', 'dark-theme');
-    document.documentElement.classList.add(`${theme}-theme`);
+    // 使用 'dark' 类切换暗色模式，Tailwind CSS darkMode 使用 'dark'
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
     
     // 设置meta标签颜色
     const metaThemeColor = document.querySelector('meta[name="theme-color"]');

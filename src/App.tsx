@@ -7,7 +7,7 @@ import './App.css';
 import VocabularyContext from './context/VocabularyContext';
 import { ProgressProvider } from './context/ProgressContext';
 import SettingsContext, { Settings } from './context/SettingsContext';
-import ThemeContext, { ThemeMode } from './context/ThemeContext';
+import { useTheme } from './context/ThemeContext';
 
 // 导入布局组件
 import MainLayout from './components/common/Layout/MainLayout';
@@ -31,7 +31,7 @@ const App: React.FC = () => {
   
   // 使用本地存储管理用户设置 - 添加缺少的属性
   const [settings, setSettings] = useLocalStorage<Settings>(STORAGE_KEYS.SETTINGS, {
-    theme: 'light' as ThemeMode, // 明确指定类型
+    theme: 'light',
     speechRate: 1,
     speechVoice: 'default',
     quizCount: 10,
@@ -40,39 +40,16 @@ const App: React.FC = () => {
     fontSize: 'medium',
     autoPlayAudio: false,
     quizTypeDistribution: { 
-      typeIn: 40,    // 正确的属性名，而不是 multiple
-      choice: 30,    // 正确的属性名，而不是 writing
-      dragDrop: 30   // 正确的属性名，而不是 listening
+      typeIn: 40,
+      choice: 30,
+      dragDrop: 30   
     },
     spacedRepetitionEnabled: true,
     reviewReminders: true
   });
 
-  // 主题状态
-  const [theme, setTheme] = React.useState<ThemeMode>(settings.theme as ThemeMode);
-
-  // 主题切换处理函数
-  const toggleTheme = () => {
-    const newTheme: ThemeMode = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    setSettings({...settings, theme: newTheme});
-  };
-
-  // 应用主题样式
-  React.useEffect(() => {
-    document.documentElement.classList.remove('light-theme', 'dark-theme');
-    document.documentElement.classList.add(`${theme}-theme`);
-  }, [theme]);
-
-  // 修改themeContextValue
-  const themeContextValue = {
-    theme: theme,
-    // 确保currentTheme只能是'light'或'dark'
-    currentTheme: theme === 'system' ? 'light' : theme as 'light' | 'dark',
-    setTheme: setTheme,
-    toggleTheme: toggleTheme,
-    isDarkMode: theme === 'dark'
-  };
+  // 使用 ThemeContext 钩子获取主题切换和模式
+  const { toggleTheme, isDarkMode } = useTheme();
 
   // 添加 VocabularyContext 需要的方法
   const addVocabulary = (word: Vocabulary) => {
@@ -143,7 +120,7 @@ const App: React.FC = () => {
 
   const resetSettings = () => {
     setSettings({
-      theme: 'light' as ThemeMode,
+      theme: 'light',
       speechRate: 1,
       speechVoice: 'default',
       quizCount: 10,
@@ -163,25 +140,21 @@ const App: React.FC = () => {
   // ProgressProvider 会提供 progressContext，内部更新和持久化
 
   return (
-    <>
-      <ThemeContext.Provider value={themeContextValue}>
-        <SettingsContext.Provider value={{ 
-          settings, 
-          setSettings, 
-          updateSetting, 
-          resetSettings, 
-          toggleTheme 
-        }}>
-          <VocabularyContext.Provider value={vocabularyContextValue}>
-            <ProgressProvider>
-              <MainLayout headerProps={{ onThemeToggle: toggleTheme, isDarkMode: themeContextValue.isDarkMode }}>
-                <AppRoutes />
-                </MainLayout>
-            </ProgressProvider>
-          </VocabularyContext.Provider>
-        </SettingsContext.Provider>
-      </ThemeContext.Provider>
-    </>
+    <SettingsContext.Provider value={{ 
+      settings, 
+      setSettings, 
+      updateSetting, 
+      resetSettings, 
+      toggleTheme 
+    }}>
+      <VocabularyContext.Provider value={vocabularyContextValue}>
+        <ProgressProvider>
+          <MainLayout headerProps={{ onThemeToggle: toggleTheme, isDarkMode }}>
+            <AppRoutes />
+          </MainLayout>
+        </ProgressProvider>
+      </VocabularyContext.Provider>
+    </SettingsContext.Provider>
   );
 };
 

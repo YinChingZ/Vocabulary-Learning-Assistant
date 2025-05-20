@@ -136,24 +136,32 @@ export const SettingsProvider: React.FC<SettingsProviderProps> = ({
     if (theme === 'system') {
       applySystemTheme();
     } else {
-      document.documentElement.classList.remove('light-theme', 'dark-theme');
-      document.documentElement.classList.add(`${theme}-theme`);
+      // Tailwind dark mode via 'dark' class
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
     }
   };
 
   // 应用系统首选主题
   const applySystemTheme = () => {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    document.documentElement.classList.remove('light-theme', 'dark-theme');
-    document.documentElement.classList.add(prefersDark ? 'dark-theme' : 'light-theme');
-    
+    // Apply dark class based on system preference
+    if (prefersDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
     // 监听系统主题变化
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
       if (settings.theme === 'system') {
-        document.documentElement.classList.remove('light-theme', 'dark-theme');
-        document.documentElement.classList.add(
-          event.matches ? 'dark-theme' : 'light-theme'
-        );
+        if (event.matches) {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
       }
     });
   };

@@ -50,8 +50,21 @@ const BulkInputArea: React.FC<BulkInputAreaProps> = ({
   
   // 处理粘贴事件，可选清理格式
   const handlePaste = (e: React.ClipboardEvent<HTMLTextAreaElement>) => {
-    // 默认允许浏览器处理粘贴
-    // 如果需要特殊处理，可以在这里添加代码
+    // 拦截默认粘贴，清理多种破折号为标准 '-'，并去除多余空白
+    e.preventDefault();
+    const pasteText = e.clipboardData.getData('text');
+    // 统一各种破折号为连续 '-', 并去除首尾空白
+    const cleaned = pasteText
+      .replace(/[—–‐-‒–—―]/g, '-')
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line.length > 0)
+      .join('\n');
+    // 合并现有内容与粘贴内容
+    const newValue = value
+      ? value.trimEnd() + '\n' + cleaned
+      : cleaned;
+    onChange(newValue);
   };
 
   return (
@@ -64,9 +77,10 @@ const BulkInputArea: React.FC<BulkInputAreaProps> = ({
         placeholder={placeholder}
         rows={minRows}
         className={`w-full p-4 border rounded-lg font-mono text-sm
+          bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
           transition duration-200 focus:ring focus:ring-blue-300 focus:border-blue-500 focus:outline-none
-          ${disabled ? 'bg-gray-100 cursor-not-allowed' : ''}
-          ${validLines > 0 ? 'border-green-300' : 'border-gray-300'}
+          ${disabled ? 'bg-gray-100 dark:bg-gray-600 cursor-not-allowed' : ''}
+          ${validLines > 0 ? 'border-green-300 dark:border-green-500' : 'border-gray-300 dark:border-gray-600'}
         `}
         data-testid="bulk-input"
       />
