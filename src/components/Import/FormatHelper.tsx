@@ -41,11 +41,15 @@ ameliorate (v.) - 改善，使...变好 - The new policies should ameliorate the
       {activeTab === 'basic' && (
         <div>
           <p className="mb-4">
-            每行输入一个词条，使用<strong>破折号</strong>（-）分隔单词和释义：
+            每行输入一个词条，使用<strong>破折号</strong>（- 或 —）分隔单词和释义：
           </p>
           
           <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded mb-6">
             <code className="text-sm">单词 - 释义</code>
+            <br/>
+            <code className="text-sm">或</code>
+            <br/>
+            <code className="text-sm">单词 — 释义</code>
           </div>
           
           <div className="mb-6">
@@ -56,7 +60,7 @@ ameliorate (v.) - 改善，使...变好 - The new policies should ameliorate the
           </div>
           
           <div className="text-sm text-gray-600 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-3 rounded">
-            <p><strong>提示：</strong> 基础格式适合快速导入大量词汇，只关注单词和释义。</p>
+            <p><strong>提示：</strong> 系统同时支持短横线(-)、长破折号(—)和中横线(–)作为分隔符。基础格式适合快速导入大量词汇，只关注单词和释义。</p>
           </div>
         </div>
       )}
@@ -90,7 +94,7 @@ ameliorate (v.) - 改善，使...变好 - The new policies should ameliorate the
           </div>
           
           <div className="text-sm text-gray-600 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-3 rounded">
-            <p><strong>提示：</strong> 词性可以添加在单词后面的括号中，也可以直接作为释义的一部分。系统会自动识别常见的词性标注。</p>
+            <p><strong>提示：</strong> 词性可以添加在单词后面的括号中，也可以直接作为释义的一部分。系统会自动识别常见的词性标注。系统支持各种类型的破折号作为分隔符。</p>
           </div>
         </div>
       )}
@@ -102,6 +106,10 @@ ameliorate (v.) - 改善，使...变好 - The new policies should ameliorate the
           <div className="flex items-start mb-3">
             <div className="w-24 flex-shrink-0 text-gray-500">原始输入：</div>
             <div className="font-mono text-sm">ephemeral - 短暂的，瞬息的</div>
+          </div>
+          <div className="flex items-start mb-3">
+            <div className="w-24 flex-shrink-0 text-gray-500">长破折号：</div>
+            <div className="font-mono text-sm">ephemeral — 短暂的，瞬息的</div>
           </div>
           <div className="flex items-start mb-3">
             <div className="w-24 flex-shrink-0 text-gray-500">带词性：</div>
