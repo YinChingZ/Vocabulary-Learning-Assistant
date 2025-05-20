@@ -18,7 +18,7 @@ export const validateInput = (input: string): { isValid: boolean; message: strin
 
   const lines = input.trim().split('\n');
   // 检查同时支持短横线和长破折号
-  const validLines = lines.filter(line => line.includes('-') || line.includes('—') || line.includes('–') || line.includes('—'));
+  const validLines = lines.filter(line => line.includes('-') || line.includes('—') || line.includes('–'));
   
   if (validLines.length === 0) {
     return { isValid: false, message: '未检测到有效格式的词汇（需包含破折号分隔符 - 或 —）' };
