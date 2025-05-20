@@ -17,11 +17,14 @@ export const validateInput = (input: string): { isValid: boolean; message: strin
   }
 
   const lines = input.trim().split('\n');
-  // 检查同时支持短横线和长破折号
-  const validLines = lines.filter(line => line.includes('-') || line.includes('—') || line.includes('–'));
+  // 检查同时支持各种破折号
+  const validLines = lines.filter(line => 
+    line.includes('-') || line.includes('—') || line.includes('–') || 
+    line.includes('－') || line.includes('⸺') || line.includes('⸻') || line.includes('⹀')
+  );
   
   if (validLines.length === 0) {
-    return { isValid: false, message: '未检测到有效格式的词汇（需包含破折号分隔符 - 或 —）' };
+    return { isValid: false, message: '未检测到有效格式的词汇（需包含破折号分隔符如 - 或 — 等）' };
   }
   
   const validRatio = validLines.length / lines.length;
@@ -78,6 +81,8 @@ export const parseInput = async (input: string): Promise<Vocabulary[]> => {
     warnings: []
   };
   
+  console.log(`总行数: ${lines.length}`); // 调试日志
+  
   for (const line of lines) {
     const trimmedLine = line.trim();
     
@@ -87,13 +92,24 @@ export const parseInput = async (input: string): Promise<Vocabulary[]> => {
       continue;
     }
     
-    // 使用正则表达式同时支持短横线和长破折号分隔
-    // 修改分割行的代码以支持更多类型的破折号
-    const parts = trimmedLine.split(/[-—–—]/).map(part => part.trim());
+    console.log(`处理行: ${trimmedLine}`); // 调试日志
+    
+    // 检测破折号类型（用于调试）
+    const hasDash = trimmedLine.includes('-');
+    const hasEmDash = trimmedLine.includes('—');
+    const hasEnDash = trimmedLine.includes('–');
+    console.log(`包含短横线: ${hasDash}, 包含长破折号: ${hasEmDash}, 包含中横线: ${hasEnDash}`); // 调试日志
+    
+    // 使用更广泛的正则表达式来匹配各种破折号
+    // 包括短横线(-)、长破折号(—)、中横线(–)、全角中横线(－)等
+    const parts = trimmedLine.split(/[-—–－⸺⸻⹀]/).map(part => part.trim());
+    
+    console.log(`分割后部分数量: ${parts.length}, 内容: ${JSON.stringify(parts)}`); // 调试日志
     
     // 必须至少有单词和释义
     if (parts.length < 2) {
       stats.invalidLines++;
+      console.log(`无效行: 部分不足`); // 调试日志
       continue;
     }
     
@@ -117,7 +133,10 @@ export const parseInput = async (input: string): Promise<Vocabulary[]> => {
     
     result.push(vocabulary);
     stats.validLines++;
+    console.log(`成功添加词条: ${word}`); // 调试日志
   }
+  
+  console.log(`总共解析成功词条数量: ${result.length}`); // 调试日志
   
   // 如果没有有效数据，抛出错误
   if (result.length === 0) {
