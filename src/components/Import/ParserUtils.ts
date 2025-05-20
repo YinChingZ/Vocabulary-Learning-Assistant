@@ -18,7 +18,7 @@ export const validateInput = (input: string): { isValid: boolean; message: strin
 
   const lines = input.trim().split('\n');
   // 检查同时支持短横线和长破折号
-  const validLines = lines.filter(line => line.includes('-') || line.includes('—'));
+  const validLines = lines.filter(line => line.includes('-') || line.includes('—') || line.includes('–') || line.includes('—'));
   
   if (validLines.length === 0) {
     return { isValid: false, message: '未检测到有效格式的词汇（需包含破折号分隔符 - 或 —）' };
@@ -88,7 +88,8 @@ export const parseInput = async (input: string): Promise<Vocabulary[]> => {
     }
     
     // 使用正则表达式同时支持短横线和长破折号分隔
-    const parts = trimmedLine.split(/[-—]/).map(part => part.trim());
+    // 修改分割行的代码以支持更多类型的破折号
+    const parts = trimmedLine.split(/[-—–—]/).map(part => part.trim());
     
     // 必须至少有单词和释义
     if (parts.length < 2) {
