@@ -31,8 +31,11 @@ const BulkInputArea: React.FC<BulkInputAreaProps> = ({
     const lines = value.trim().split('\n');
     setTotalLines(lines.length);
     
-    // 检测有效行（至少包含一个破折号分隔符）
-    const valid = lines.filter(line => line.includes('-'));
+    // 检测有效行（支持多种破折号分隔符）
+    const valid = lines.filter(line => 
+      line.includes('-') || line.includes('—') || line.includes('–') || 
+      line.includes('－') || line.includes('⸺') || line.includes('⸻') || line.includes('⹀')
+    );
     setValidLines(valid.length);
     
     // 提取前3行作为预览
